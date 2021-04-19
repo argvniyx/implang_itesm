@@ -1,10 +1,10 @@
 import geopandas as gpd
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-from components.utils import highlight
+from implang_utils.components.utils import highlight
 
 # DataFrame
-df = gpd.read_file("data/banquetas_puntos.geojson")
+df = gpd.read_file("implang_utils/data/banquetas_puntos.geojson")
 
 total_defects = df.shape[0]
 defect_counts = df["properties/label_type"].value_counts()

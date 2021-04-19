@@ -1,0 +1,38 @@
+#+TITLE: Docs
+
+* Proceso de =banquetas_puntos.geojson=
+El geojson de los puntos original no respeta el RFC 7946
+([[https://tools.ietf.org/html/rfc7946#page-8][https://tools.ietf.org/html/rfc7946#page-8]]). Para convertirlo a una
+forma adecuada, utilizamos el siguiente comando de =jq=
+
+#+begin_src bash
+jq '
+{
+    type,
+    name,
+    crs,
+    features: [
+        .features[] | .properties |
+            {
+                type,
+                geometry: {
+                    type: "Point",
+                    coordinates: [ ."geometry/coordinates/0", ."geometry/coordinates/1" ]
+                },
+                properties: {
+                    attribute_id: ."properties/attribute_id",
+                    label_type: ."properties/label_type",
+                    neighborhood: ."properties/neighborhood",
+                    severity: ."properties/severity",
+                    is_temporary: ."properties/is_temporary"
+                }
+            }
+    ]
+}
+' banquetas_puntos.geojson > new-points.geojson
+#+end_src
+
+Esto permite que =geopandas= pueda tratar la geometría del =GeoDataFrame= con
+métodos y propiedades especiales (e.g. el acceso de coordenaas con =x= y =y=) y
+que podamos pasar estas propiedades como latitudes y longitudes a métodos de
+=plotly.scatter_mapbox=.
