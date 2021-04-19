@@ -54,4 +54,5 @@ env/
 apps/__pycache__/
 
 # Datos
-data/
+*.csv
+*.geojson
