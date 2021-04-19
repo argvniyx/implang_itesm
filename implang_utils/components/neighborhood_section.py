@@ -1,12 +1,14 @@
-import pandas as pd
-import geopandas as gpd
+"""
+neighborhood_section.py:
+Componente para mostrar información
+numérica de colonias
+"""
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 
-# Computing the values
-df = gpd.read_file("data/banquetas_puntos.geojson")
+from implang_utils.data.dataframe import df_points
 
-neighborhoods = df["properties/neighborhood"].value_counts()
+neighborhoods = df_points["neighborhood"].value_counts()
 
 
 # Generating the Components

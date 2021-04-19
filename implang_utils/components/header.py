@@ -15,6 +15,6 @@ def header():
             html.P("Una breve introducción por aquí")
         ],
         style={
-            "borderRadius": 0
+            "borderRadius": 0,
         }
     )

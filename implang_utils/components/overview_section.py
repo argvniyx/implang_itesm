@@ -1,13 +1,15 @@
-import geopandas as gpd
+"""
+overview_section.py:
+Componente que resume las cantidades de
+defectos/observaciones de banquetas
+"""
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-from components.utils import highlight
+from implang_utils.data.dataframe import df_points
+from implang_utils.components.utils import highlight
 
-# DataFrame
-df = gpd.read_file("data/banquetas_puntos.geojson")
-
-total_defects = df.shape[0]
-defect_counts = df["properties/label_type"].value_counts()
+total_defects = df_points.shape[0]
+defect_counts = df_points["label_type"].value_counts()
 
 # Components
 # TODO:
@@ -21,12 +23,16 @@ cards = dbc.CardDeck(
                     html.P(defect_counts[defect], className="card-text")
                 ]
             ),
-            style={ "flex": "0 0 auto", "width": "20em" },
+            style={"flex": "0 0 auto", "width": "20em"},
             className="mt-3"
         )
         for defect in defect_counts.keys()
     ],
-    style={ "alignContents": "space-between", "justifyContent": "center", "alignItems": "center" }
+    style={
+        "alignContents": "space-between",
+        "justifyContent": "center",
+        "alignItems": "center"
+    }
 )
 
 
