@@ -10,6 +10,7 @@ from implang_utils.data.dataframe import df_points
 
 
 def map_component():
+    "Create a Plotly map with the observations"
     fig = px.scatter_mapbox(df_points,
                             lat=df_points.geometry.y,
                             lon=df_points.geometry.x,
