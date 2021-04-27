@@ -13,3 +13,6 @@ df_points = gpd.read_file("implang_utils/data/puntos.geojson")
 
 # Manipulación de banquetas
 df_curbs = gpd.read_file("implang_utils/data/lineas.geojson")
+
+# Manipulación de datos del DENUE costumizada
+df_denue_filtered = gpd.read_file("implang_utils/data/filtered_denue.geojson")
