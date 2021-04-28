@@ -11,6 +11,8 @@ from implang_utils.components.section import section
 from implang_utils.components.curb_evaluation import curb_evaluation
 from implang_utils.components.overview_section import overview_section
 from implang_utils.components.map_component import map_component
+from implang_utils.components.map_component import map_component_denue
+
 
 sections = [
     neighborhood_section,
@@ -22,7 +24,8 @@ layout = dbc.Container(
         header(),
         overview_section(),
         *[section(func) for func in sections],
-        map_component()
+        map_component(),
+        map_component_denue()
     ],
     fluid=True
 )
