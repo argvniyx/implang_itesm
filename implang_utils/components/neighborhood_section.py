@@ -18,16 +18,24 @@ def tab_content(title):
         dbc.CardBody([
             html.H3(title),
             html.P(["Total de imperfectos: ", neighborhoods[title]])
-        ])
-        , className="mt-3")
+        ]),
+        className="mt-3")
 
 
 def neighborhood_section():
-    "Function that returns a Card Body with neighborhood stats"
-    return [
-        dbc.CardHeader(html.H2("Las colonias")),
-        dbc.CardBody([
-            dbc.Tabs([dbc.Tab(tab_content(t), label=t)
-                      for t in neighborhoods.keys()])
-        ])
-    ]
+    "Card component with neighborhood stats"
+    return dbc.Card(
+        [
+            dbc.CardHeader(html.H2("Las colonias")),
+            dbc.CardBody(
+                [
+                    dbc.Tabs(
+                        [
+                            dbc.Tab(tab_content(t), label=t)
+                            for t in neighborhoods.keys()
+                        ]
+                    )
+                ]
+            )
+        ]
+    )

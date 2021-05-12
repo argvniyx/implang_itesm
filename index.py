@@ -24,9 +24,9 @@ app.layout = dbc.Container(
             brand='IMPLANG',
             brand_href='/apps/home'
         ),
-        html.Div(id='page-content', children=[]),
+        dbc.Row([], id='page-content'),
         dcc.Location(id='url', refresh=False)
-    ]
+    ],
 )
 
 
