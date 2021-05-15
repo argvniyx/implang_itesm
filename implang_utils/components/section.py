@@ -26,5 +26,5 @@ def section(component_func):
             ),
             navigation_button("down"),
         ],
-        className="vh-100 flex-column"
+        className="page-section flex-column"
     )

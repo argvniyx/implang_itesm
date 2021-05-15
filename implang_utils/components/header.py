@@ -12,8 +12,15 @@ def header():
     "Header produces a Jumbotron"
     return dbc.Jumbotron(
         [
-            html.H1("Movilidad Implang", className="display-2"),
-            html.H2("El estado de las banquetas de San Pedro", className="display-4")
+            html.H1(
+                "Movilidad Implang",
+                className="display-2 d-none d-md-block"
+            ),
+            html.H1(
+                "Movilidad Implang",
+                className="d-block d-md-none"
+            ),
+            html.H2("El estado de las banquetas de San Pedro")
         ],
         className="rounded-0 h-100 m-0",
         style={

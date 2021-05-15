@@ -10,14 +10,13 @@ from app import app
 from dash.dependencies import ClientsideFunction, Input, Output, ALL
 
 # We must use a dummy id and a dummy property
-# (i.e. top-container, in the index.py layout)
 # Because Dash will throw errors on duplicate outputs
 app.clientside_callback(
     ClientsideFunction(
         namespace="clientside",
         function_name="scrollSection"
     ),
-    Output("top-container", "n_clicks"),
+    Output("scrollSection-callback-target", "n_clicks"),
     Input({'type': ALL, 'direction': ALL}, "n_clicks"),
     prevent_initial_call=True
 )
@@ -34,7 +33,8 @@ def navigation_button(direction):
             html.I(className="bi bi-chevron-down")
             if direction == "down"
             else
-            html.I(className="bi bi-chevron-up")
+            html.I(className="bi bi-chevron-up"),
+            html.Div([], id="scrollSection-callback-target")
         ],
         id={'type': 'navigation-button', 'direction': direction},
         className='rounded-0',
