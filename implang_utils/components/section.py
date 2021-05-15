@@ -18,14 +18,13 @@ def section(component_func):
 
     return dbc.Row(
         [
+            navigation_button("up"),
             dbc.Col(
-                [
-                    navigation_button("up"),
-                    dbc.Row(component_func(), className="flex-grow-1"),
-                    navigation_button("down"),
-                ],
-                className="d-flex flex-column"
-            )
+                component_func(),
+                className="flex-grow-1 p-0",
+                style={"overflowY": "auto"}
+            ),
+            navigation_button("down"),
         ],
-        className="vh-100"
+        className="vh-100 flex-column"
     )

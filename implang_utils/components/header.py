@@ -10,12 +10,16 @@ import dash_html_components as html
 
 def header():
     "Header produces a Jumbotron"
-    return dbc.Col(
-        dbc.Jumbotron(
-            [
-                html.H1("Movilidad Implang"),
-                html.H2("El estado de las banquetas de San Pedro")
-            ],
-            className="h-100 rounded-0"
-        )
+    return dbc.Jumbotron(
+        [
+            html.H1("Movilidad Implang", className="display-2"),
+            html.H2("El estado de las banquetas de San Pedro", className="display-4")
+        ],
+        className="rounded-0 h-100 m-0",
+        style={
+            "backgroundImage": "url(../../assets/san-pedro-background.jpg)",
+            "backgroundPosition": "center",
+            "backgroundSize": "cover",
+            "backgroundRepeat": "no-repeat",
+        }
     )

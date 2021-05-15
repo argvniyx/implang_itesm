@@ -2,12 +2,7 @@
 itesm.py:
 Trabajo hecho por el equipo de
 Visualización de Datos y Narrativa
-
-TODO (ideas)
-Sidebar navigation(?)
-Button to smooth slide over sections(?)
 """
-import dash_bootstrap_components as dbc
 
 from implang_utils.components.header import header
 from implang_utils.components.neighborhood_section import neighborhood_section
@@ -22,17 +17,13 @@ sections = [
     header,
     overview_section,
     neighborhood_section,
-    map_component_inegi
+    map_component_inegi,
+    map_component,
+    map_component_denue
 ]
 
-layout = dbc.Col(
-    [
-        *[
-            section(func)
-            for func in sections
-        ],
-        map_component(),
-        map_component_denue(),
-    ],
-    id="itesm-container"
-)
+# A pages layout is simply a list of Rows
+layout = [
+    section(func)
+    for func in sections
+]

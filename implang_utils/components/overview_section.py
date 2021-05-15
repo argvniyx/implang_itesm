@@ -34,7 +34,7 @@ def overview_section():
        [
            dbc.CardBody(
                [
-                   html.H2("En resumen", className="card-title"),
+                   html.H1("En San Pedro", className="card-title"),
                    html.H5(
                        [
                            "Hay un total de ",
@@ -45,6 +45,6 @@ def overview_section():
                    ),
                    cards
                ],
-           )
+           ),
        ]
     )
