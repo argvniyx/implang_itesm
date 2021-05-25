@@ -12,20 +12,24 @@ from implang_utils.components.curb_evaluation import curb_evaluation
 from implang_utils.components.overview_section import overview_section
 from implang_utils.components.map_component import map_component
 from implang_utils.components.map_component import map_component_denue
+from implang_utils.components.map_component import map_component_inegi
+from implang_utils.components.map_component import map_component_go
+
 
 
 sections = [
     neighborhood_section,
-    curb_evaluation
+    map_component_go,
+    #map_component_go(['Score_PTS']),
+    #map_component_go(['Score_PTS','Score_EST']),
+    #map_component_go(['Score_PTS','Score_PR']),
+    #map_component_go(['Score_PTS','Score_EST','Score_PR']),
+    map_component_inegi,
+    map_component,
+    map_component_denue
 ]
-
-layout = dbc.Container(
-    [
-        header(),
-        overview_section(),
-        *[section(func) for func in sections],
-        map_component(),
-        map_component_denue()
-    ],
-    fluid=True
-)
+# A pages layout is simply a list of Rows
+layout = [
+    section(func)
+    for func in sections
+]
