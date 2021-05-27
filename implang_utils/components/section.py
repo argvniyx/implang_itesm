@@ -1,6 +1,11 @@
-import dash
+"""
+section.py:
+This component is meant to
+abstract common styling
+conventions such as using 100vh
+"""
 import dash_bootstrap_components as dbc
-import dash_html_components as html
+from implang_utils.components.navigation_button import navigation_button
 
 
 def section(component_func):
@@ -10,6 +15,16 @@ def section(component_func):
                     which will most likely represent the caller's
                     body
     """
-    return dbc.Card([
-        *component_func()
-    ], color="light", className="mb-3")
+
+    return dbc.Row(
+        [
+            navigation_button("up"),
+            dbc.Col(
+                component_func(),
+                className="flex-grow-1 p-0",
+                style={"overflowY": "auto"}
+            ),
+            navigation_button("down"),
+        ],
+        className="page-section flex-column"
+    )
