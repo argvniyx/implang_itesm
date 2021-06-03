@@ -13,14 +13,14 @@ def header():
     return dbc.Jumbotron(
         [
             html.H1(
-                "Movilidad Implang",
+                "Movilidad IMPLANG",
                 className="display-2 d-none d-md-block"
             ),
             html.H1(
-                "Movilidad Implang",
+                "Movilidad IMPLANG",
                 className="d-block d-md-none"
             ),
-            html.H2("El estado de las banquetas de San Pedro")
+            html.H2("El estado de las banquetas de San Pedro Garza García, Monterrey")
         ],
         className="rounded-0 h-100 m-0",
         style={
