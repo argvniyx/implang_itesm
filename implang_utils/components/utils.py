@@ -41,3 +41,32 @@ def get_z(df, data):
          return df[data[0]]
     else:
         return df['Score_PTS']
+
+def get_title(data):
+    titulos = {
+        "PTS" : "Porcentaje de calificación promedio de banquetas",
+        "PR"  : "Porcentaje de personas de alto riesgo por manzana",
+        "EST" : "Numero de establecimientos de alta importancia por manzana",
+        "PTS+PR" : "Calificación de baquetas tomando datos de personas de riesgo",
+        "PTS+EST" : "Calificación de baquetas tomando datos de establecimientos",
+        "PTS+PR+EST": "Calificación de banquetas tomando datos de personas de riesgo establecimientos"
+    }
+    if len(data) == 0:
+        return titulos['PTS']
+    elif len(data) == 3:
+        return titulos['PTS+PR+EST']
+    elif len(data) == 1:
+        if data[0] == "Score_PTS":
+            return titulos['PTS']
+        elif data[0] == "Score_PR":
+            return titulos['PR']
+        elif data[0] == "Score_EST":
+            return titulos['EST']
+    elif len(data) == 2:
+            if data[0] == "Score_PTS":
+                if data[1] == "Score_PR":
+                    return titulos['PTS+PR']
+                elif data[1] == "Score_EST":
+                    return titulos['PTS+EST']
+    else:
+        return ""

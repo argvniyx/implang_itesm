@@ -17,7 +17,6 @@ sections = [
     header,
     overview_section,
     neighborhood_section,
-    map_component_go,
     lambda: map_component_go(['Score_PTS']),
     lambda: map_component_go(['Score_PTS','Score_EST']),
     lambda: map_component_go(['Score_PTS','Score_PR']),

@@ -18,11 +18,13 @@ from implang_utils.data.dataframe import json_scores
 
 from implang_utils.components.utils import graph_color_scale
 from implang_utils.components.utils import get_z
+from implang_utils.components.utils import get_title
 
 def map_component_go(data=[]):
     "Create a Plotly map with the observations"
     z_value = get_z(df_scores, data)
     colorscale = graph_color_scale()
+    title = get_title(data)
     
     fig = go.Figure(go.Choroplethmapbox(geojson=json_scores, 
                                     locations=df_scores.id,
@@ -34,10 +36,11 @@ def map_component_go(data=[]):
                                     marker_line_width=0,
                                     hoverinfo='all'))
 
-    fig.update_layout(mapbox_style="stamen-toner",
+    fig.update_layout(title=title,
+                      mapbox_style="stamen-toner",
                       autosize=True,
                       mapbox_center = {"lat": 25.6551647, "lon": -100.3948332},
-                      mapbox_zoom=12)
+                      mapbox_zoom=11)
 
     return dcc.Graph(figure=fig)
 
