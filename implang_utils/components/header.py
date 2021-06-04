@@ -20,7 +20,9 @@ def header():
                 "Movilidad IMPLANG",
                 className="d-block d-md-none"
             ),
-            html.H2("El estado de las banquetas de San Pedro Garza García, Monterrey")
+            html.H2("El estado de las banquetas de San Pedro Garza García, Monterrey"),
+            html.H3("Según el INEGI en Nuevo León existen 220 mil 206 personas con discapacidad lo que representa al 3.80 por ciento de la población"),
+            html.H3("Es decir, 38 personas de cada mil sufren una discapacidad")
         ],
         className="rounded-0 h-100 m-0",
         style={
