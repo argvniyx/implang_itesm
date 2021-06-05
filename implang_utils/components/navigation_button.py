@@ -4,30 +4,17 @@ navigation_button.py:
 Encapsulation of the button behaviors
 in our sections.
 """
-import dash_bootstrap_components as dbc
 import dash_html_components as html
-from app import app
-from dash.dependencies import ClientsideFunction, Input, Output, ALL
-
-# We must use a dummy id and a dummy property
-# Because Dash will throw errors on duplicate outputs
-app.clientside_callback(
-    ClientsideFunction(
-        namespace="clientside",
-        function_name="scrollSection"
-    ),
-    Output("scrollSection-callback-target", "n_clicks"),
-    Input({'type': ALL, 'direction': ALL}, "n_clicks"),
-    prevent_initial_call=True
-)
 
 
-def navigation_button(direction):
+def navigation_button(direction, section_number):
     """
     navigation_button: Int -> Row
     """
+    prev_a = 0 if section_number == 0 else section_number - 1
+    next_a = section_number + 1
 
-    return dbc.Button(
+    return html.A(
         [
             # Cursed Python
             html.I(className="bi bi-chevron-down")
@@ -36,8 +23,7 @@ def navigation_button(direction):
             html.I(className="bi bi-chevron-up"),
             html.Div([], id="scrollSection-callback-target")
         ],
-        id={'type': 'navigation-button', 'direction': direction},
-        className='rounded-0',
-        block=True,
-        color="dark"
+        id=f'section-{section_number}-{direction}',
+        href=f'#section-{prev_a}-up' if direction == "up" else f'#section-{next_a}-up',
+        className="btn btn-dark btn-block rounded-0"
     )

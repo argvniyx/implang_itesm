@@ -21,10 +21,10 @@ sections = [
     map_component,
     map_component_denue,
     map_component_go,
-    #map_component_go(['Score_PTS']),
-    #map_component_go(['Score_PTS','Score_EST']),
-    #map_component_go(['Score_PTS','Score_PR']),
-    #map_component_go(['Score_PTS','Score_EST','Score_PR']),
+    lambda: map_component_go(['Score_PTS']),
+    lambda: map_component_go(['Score_PTS', 'Score_EST']),
+    lambda: map_component_go(['Score_PTS', 'Score_PR']),
+    lambda: map_component_go(['Score_PTS', 'Score_EST', 'Score_PR']),
     map_component_inegi,
     map_component,
     map_component_denue
@@ -32,6 +32,6 @@ sections = [
 
 # A pages layout is simply a list of Rows
 layout = [
-    section(func)
-    for func in sections
+    section(func, i)
+    for i, func in enumerate(sections)
 ]
