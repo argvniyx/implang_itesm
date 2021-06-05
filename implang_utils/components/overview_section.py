@@ -76,8 +76,39 @@ label_cards = dbc.CardDeck(
         for label in label_counts
     ],
 )
+'''
+table_header = [
+    html.Thead(html.Tr([html.Th("Nivel de emergencia"), html.Th("Ejemplo")]))
+]
 
+row1 = html.Tr([html.Td("1"), html.Td(html.Img(src='../../assets/1.png', style={'height':'10%', 'width':'10%'}))])
+row2 = html.Tr([html.Td("2"), html.Td(html.Img(src='../../assets/2.png', style={'height':'10%', 'width':'10%'}))])
+row3 = html.Tr([html.Td("3"), html.Td(html.Img(src='../../assets/3.png', style={'height':'10%', 'width':'10%'}))])
+row4 = html.Tr([html.Td("4"), html.Td(html.Img(src='../../assets/4.png', style={'height':'10%', 'width':'10%'}))])
 
+table_body = [html.Tbody([row1, row2, row3, row4])]
+
+table = dbc.Table(table_header + table_body, bordered=True)
+'''
+row = html.Div(
+    [
+        dbc.Row([
+            html.H1("Ejemplos de problemas en las banquetas"),
+        ]),
+        dbc.Row([
+            html.H4("1 siendo lo menos importante y 5 siendo lo más importante")
+        ]),
+        dbc.Row(
+            [
+                dbc.Col(html.Div(html.Img(src='../../assets/1.png', style={'height':'100%', 'width':'100%'}))),
+                dbc.Col(html.Div(html.Img(src='../../assets/2.png', style={'height':'100%', 'width':'100%'}))),
+                dbc.Col(html.Div(html.Img(src='../../assets/3.png', style={'height':'100%', 'width':'100%'}))),
+                dbc.Col(html.Div(html.Img(src='../../assets/4.png', style={'height':'100%', 'width':'100%'}))),
+                dbc.Col(html.Div(html.Img(src='../../assets/5.png', style={'height':'100%', 'width':'100%'}))),
+            ]
+        ),
+    ], style={'display': 'flex', 'flex-direction': 'column', 'position': 'absolute', 'bottom': '-55vh'}
+)
 def overview_section():
     "DB Component<Container>"
 
@@ -85,7 +116,7 @@ def overview_section():
         [
             dbc.CardBody(
                 [
-                    html.H1("En San Pedro", className="card-title"),
+                    html.H1("En SPGG", className="card-title"),
                     html.H5(
                         [
                             "Se han hecho un total de ",
@@ -99,7 +130,7 @@ def overview_section():
                         ]
                     ),
                     label_cards,
-                    category_cards
+                    row
                 ],
             ),
         ]

@@ -36,6 +36,15 @@ def neighborhood_section():
                         ]
                     )
                 ]
-            )
+            ),
+            html.Div(
+            [
+                dbc.Row(
+                [
+                    dbc.Col(html.Div(html.Img(src='../../assets/streetDisability.jpg', style={'height':'100%', 'width':'100%', 'margin-left': '30vw'})), width=5)
+                ]
+            ),
+            ]
+            ),
         ]
     )
