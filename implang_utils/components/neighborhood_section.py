@@ -3,9 +3,11 @@ neighborhood_section.py:
 Componente para mostrar información
 numérica de colonias
 """
+from implang_utils.components.utils import graph_color_scale
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-
+import plotly.express as px
+import dash_core_components as dcc
 from implang_utils.data.dataframe import df_points
 
 neighborhoods = df_points["neighborhood"].value_counts()
@@ -20,7 +22,10 @@ def tab_content(title):
             html.P(["Total de imperfectos: ", neighborhoods[title]])
         ]),
         className="mt-3")
-
+def histogram_neighborhood():
+    fig = px.histogram(df_points, x="neighborhood", color_discrete_sequence=['#a23e48'])
+    fig.show()
+    return dcc.Graph(figure=fig)
 
 def neighborhood_section():
     "Card component with neighborhood stats"
@@ -41,7 +46,8 @@ def neighborhood_section():
             [
                 dbc.Row(
                 [
-                    dbc.Col(html.Div(html.Img(src='../../assets/streetDisability.jpg', style={'height':'100%', 'width':'100%', 'margin-left': '30vw'})), width=5)
+                    dbc.Col(histogram_neighborhood()),
+                    dbc.Col(html.Div(html.Img(src='../../assets/streetDisability.jpg', style={'height':'100%', 'width':'100%', 'marginLeft': '-1vw'})), width=5)
                 ]
             ),
             ]

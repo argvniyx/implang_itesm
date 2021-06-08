@@ -107,8 +107,9 @@ row = html.Div(
                 dbc.Col(html.Div(html.Img(src='../../assets/5.png', style={'height':'100%', 'width':'100%'}))),
             ]
         ),
-    ], style={'display': 'flex', 'flex-direction': 'column', 'position': 'absolute', 'bottom': '-55vh'}
+    ], style={'display': 'flex', 'flexDirection': 'column', 'position': 'absolute', 'bottom': '-55vh'}
 )
+
 def overview_section():
     "DB Component<Container>"
 

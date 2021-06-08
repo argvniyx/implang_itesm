@@ -24,10 +24,7 @@ sections = [
     lambda: map_component_go(['Score_PTS']),
     lambda: map_component_go(['Score_PTS', 'Score_EST']),
     lambda: map_component_go(['Score_PTS', 'Score_PR']),
-    lambda: map_component_go(['Score_PTS', 'Score_EST', 'Score_PR']),
-    map_component_inegi,
-    map_component,
-    map_component_denue
+    lambda: map_component_go(['Score_PTS', 'Score_EST', 'Score_PR'])
 ]
 
 # A pages layout is simply a list of Rows
