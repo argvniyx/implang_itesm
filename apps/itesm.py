@@ -17,6 +17,7 @@ sections = [
     header,
     overview_section,
     neighborhood_section,
+    # evaluate if we need this 3 maps map_component_inegi, map_component, map_component_denue
     map_component_inegi,
     map_component,
     map_component_denue,

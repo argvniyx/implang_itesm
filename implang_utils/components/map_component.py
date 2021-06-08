@@ -36,7 +36,9 @@ def map_component_go(data=[]):
                                     hoverinfo='all'))
 
     fig.update_layout(mapbox_style="stamen-toner",
-                      autosize=True,
+                      autosize=False,
+                      width=1900,
+                      height=800,
                       mapbox_center = {"lat": 25.6551647, "lon": -100.3948332},
                       mapbox_zoom=12)
 
@@ -51,6 +53,9 @@ def map_component():
                             hover_name="label_type",
                             mapbox_style="stamen-toner",
                             zoom=13)
+    fig.update_layout(autosize=False,
+                      width=1900,
+                      height=800)
 
     return dcc.Graph(figure=fig)
 
@@ -65,6 +70,9 @@ def map_component_denue():
                         hover_data=["nom_estab"],
                         size="per_ocu_cat",
                         zoom=13)
+    fig.update_layout(autosize=False,
+                    width=1900,
+                    height=800)
 
     return dcc.Graph(figure=fig)
 
@@ -83,11 +91,9 @@ def map_component_inegi():
                             mapbox_style="stamen-toner",
                             zoom=12)
 
-    # Make background transparent
-    fig.update_layout({
-        'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-        'paper_bgcolor': 'rgba(0,0,0,0)'
-    })
+    fig.update_layout(autosize=False,
+                    width=1900,
+                    height=800)
 
     return dbc.Card(
         [
