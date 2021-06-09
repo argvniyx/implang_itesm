@@ -35,6 +35,23 @@ def map_component_go(data=[]):
         html.Div(id='dd-output-container')
         ])
 
+
+def map_componet_points():
+    "Create a Plotly map with the observations"
+    fig = px.scatter_mapbox(df_points,
+                        lat=df_points.geometry.y,
+                        lon=df_points.geometry.x,
+                        mapbox_style="stamen-toner",
+                        color="neighborhood", 
+                        #hover_data=["nom_estab"],
+                        #size="per_ocu_cat",
+                        zoom=13)
+    
+    fig.update_layout(autosize=True)
+
+    return dcc.Graph(figure=fig)
+    
+
 # This functions below are for testing purposes
 def map_component():
     "Create a Plotly map with the observations"
