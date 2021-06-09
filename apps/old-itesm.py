@@ -16,7 +16,7 @@ layout = html.Div([
             html.H2('Ejemplo título banner',
                 style={'position': 'absolute', 'top': '50%', 'left': '50%',
                 'transform': 'translate(-50%, -50%)'})
-        ], style={'color': 'white', 'position': 'relative', 'text-align': 'center'})
+        ], style={'color': 'white', 'position': 'relative', 'textAlign': 'center'})
     ),
 
     ## SECCIÓN 1

@@ -3,7 +3,7 @@ utils.py:
 A couple of wrappers and other nice to haves
 """
 import dash_html_components as html
-
+import dash_core_components as dcc
 
 def highlight(component, color="yellow"):
     """
@@ -41,15 +41,14 @@ def get_z(df, data):
          return df[data[0]]
     else:
         return df['Score_PTS']
-
 def get_title(data):
     titulos = {
         "PTS" : "Porcentaje de calificación promedio de banquetas",
         "PR"  : "Porcentaje de personas de alto riesgo por manzana",
-        "EST" : "Numero de establecimientos de alta importancia por manzana",
-        "PTS+PR" : "Calificación de baquetas tomando datos de personas de riesgo",
-        "PTS+EST" : "Calificación de baquetas tomando datos de establecimientos",
-        "PTS+PR+EST": "Calificación de banquetas tomando datos de personas de riesgo establecimientos"
+        "EST" : "Número de establecimientos de alta importancia por manzana",
+        "PTS+PR" : "Calificación de banquetas tomando datos de personas de riesgo",
+        "PTS+EST" : "Calificación de banquetas tomando datos de establecimientos",
+        "PTS+PR+EST": "Calificación de banquetas tomando datos de personas de riesgo y establecimientos"
     }
     if len(data) == 0:
         return titulos['PTS']

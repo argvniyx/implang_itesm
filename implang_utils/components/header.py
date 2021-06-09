@@ -13,14 +13,19 @@ def header():
     return dbc.Jumbotron(
         [
             html.H1(
-                "Movilidad Implang",
-                className="display-2 d-none d-md-block"
+                "Movilidad IMPLANG",
+                className="display-2 d-none d-md-block",
+                style={"textAlign" : "center"}
             ),
             html.H1(
-                "Movilidad Implang",
+                "Movilidad IMPLANG",
                 className="d-block d-md-none"
             ),
-            html.H2("El estado de las banquetas de San Pedro")
+            html.Div([
+                html.H2("El estado de las banquetas de San Pedro Garza García, Monterrey"),
+                html.H3("Según el INEGI en Nuevo León existen 220 mil 206 personas con discapacidad lo que representa al 3.80 por ciento de la población"),
+                html.H3("Es decir, 38 personas de cada mil sufren una discapacidad")            
+            ], style={"textAlign" : "center"})
         ],
         className="rounded-0 h-100 m-0",
         style={
@@ -28,5 +33,8 @@ def header():
             "backgroundPosition": "center",
             "backgroundSize": "cover",
             "backgroundRepeat": "no-repeat",
+            "display": "flex",
+            "flexFlow": "column",
+            "justifyContent": "center"
         }
     )
