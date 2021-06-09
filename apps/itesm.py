@@ -21,7 +21,7 @@ sections = [
     # map_component_inegi,
     # map_component,
     # map_component_denue,
-    map_component_go,
+    # map_component_go,
     lambda: map_component_go(['Score_PTS']),
     lambda: map_component_go(['Score_PTS', 'Score_EST']),
     lambda: map_component_go(['Score_PTS', 'Score_PR']),
