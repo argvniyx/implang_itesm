@@ -3,7 +3,7 @@ utils.py:
 A couple of wrappers and other nice to haves
 """
 import dash_html_components as html
-
+import dash_core_components as dcc
 
 def highlight(component, color="yellow"):
     """
@@ -48,7 +48,7 @@ def get_title(data):
         "EST" : "Número de establecimientos de alta importancia por manzana",
         "PTS+PR" : "Calificación de banquetas tomando datos de personas de riesgo",
         "PTS+EST" : "Calificación de banquetas tomando datos de establecimientos",
-        "PTS+PR+EST": "Calificación de banquetas tomando datos de personas de riesgo establecimientos"
+        "PTS+PR+EST": "Calificación de banquetas tomando datos de personas de riesgo y establecimientos"
     }
     if len(data) == 0:
         return titulos['PTS']

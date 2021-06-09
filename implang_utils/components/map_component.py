@@ -8,8 +8,6 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import plotly.graph_objects as go
-
-
 from implang_utils.data.dataframe import df_points
 from implang_utils.data.dataframe import df_denue_filtered
 from implang_utils.data.dataframe import df_inegi
@@ -19,34 +17,25 @@ from implang_utils.data.dataframe import json_scores
 from implang_utils.components.utils import graph_color_scale
 from implang_utils.components.utils import get_z
 from implang_utils.components.utils import get_title
-
+""" fig = px.histogram(df1, x="reviews_per_month", y="price", color="room_type", marginal="rug")
+fig.show() """
 def map_component_go(data=[]):
     "Create a Plotly map with the observations"
-    z_value = get_z(df_scores, data)
-    colorscale = graph_color_scale()
-    title = get_title(data)
+    return html.Div([
+        dcc.Dropdown(
+            id='demo-dropdown',
+            options=[
+                {'label': 'Porcentaje de calificación promedio de banquetas', 'value': 'A'},
+                {'label': 'Calificación de banquetas tomando datos de establecimientos', 'value': 'B'},
+                {'label': 'Calificación de banquetas tomando datos de personas de riesgo', 'value': 'C'},
+                {'label': 'Calificación de banquetas tomando datos de personas de riesgo y establecimientos', 'value': 'D'},
+            ],
+            value='A'
+        ),
+        html.Div(id='dd-output-container')
+        ])
 
-    fig = go.Figure(go.Choroplethmapbox(geojson=json_scores, 
-                                    locations=df_scores.id,
-                                    z= z_value,
-                                    colorscale= colorscale,
-                                    zmin=1,
-                                    zmax=5,
-                                    marker_opacity=(z_value/10) + 0.4, 
-                                    marker_line_width=0,
-                                    hoverinfo='all'))
-
-    fig.update_layout(title=title,
-                      mapbox_style="stamen-toner",
-                      autosize=False,
-                      width=1900,
-                      height=800,
-                      mapbox_center = {"lat": 25.6551647, "lon": -100.3948332},
-                      mapbox_zoom=12)
-
-    return dcc.Graph(figure=fig)
-
-
+# This functions below are for testing purposes
 def map_component():
     "Create a Plotly map with the observations"
     fig = px.scatter_mapbox(df_points,
@@ -55,9 +44,7 @@ def map_component():
                             hover_name="label_type",
                             mapbox_style="stamen-toner",
                             zoom=13)
-    fig.update_layout(autosize=False,
-                      width=1900,
-                      height=800)
+    fig.update_layout(autosize=True)
 
     return dcc.Graph(figure=fig)
 
@@ -72,9 +59,7 @@ def map_component_denue():
                         hover_data=["nom_estab"],
                         size="per_ocu_cat",
                         zoom=13)
-    fig.update_layout(autosize=False,
-                    width=1900,
-                    height=800)
+    fig.update_layout(autosize=True)
 
     return dcc.Graph(figure=fig)
 
@@ -93,9 +78,7 @@ def map_component_inegi():
                             mapbox_style="stamen-toner",
                             zoom=12)
 
-    fig.update_layout(autosize=False,
-                    width=1900,
-                    height=800)
+    fig.update_layout(autosize=True)
 
     return dbc.Card(
         [
