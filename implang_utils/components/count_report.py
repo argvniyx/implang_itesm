@@ -81,13 +81,103 @@ def count_report_cards(counts):
             for c in counts
         ],
     )
+def obstacleImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
 
+                    dbc.Col(html.Div(html.Img(src='../../assets/obstacle.png', style={'height':'100%', 'width':'100%'})))
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def surfaceImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
 
+                    dbc.Col(html.Div(html.Img(src='../../assets/surfaceProblem.png', style={'height':'100%', 'width':'100%'})), width=10)
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def noCurbRampImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
+
+                    dbc.Col(html.Div(html.Img(src='../../assets/noCurbRamp.png', style={'height':'100%', 'width':'100%'})), width=10)
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def noSidewalkImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
+
+                    dbc.Col(html.Div(html.Img(src='../../assets/noSidewalk.png', style={'height':'100%', 'width':'100%'})))
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def curbRampImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
+
+                    dbc.Col(html.Div(html.Img(src='../../assets/curbRamp.png', style={'height':'100%', 'width':'100%'})), width=10)
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def occlusionImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
+
+                    dbc.Col(html.Div(html.Img(src='../../assets/occlusion.png', style={'height':'100%', 'width':'100%'})), width=10)
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
+def otherImage():
+    return html.Div(
+        [
+        dbc.Row(
+                [
+
+                    dbc.Col(html.Div(html.Img(src='../../assets/other.png', style={'height':'100%', 'width':'100%'})), width=10)
+                ]
+            ),
+        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+    )
 def count_report_sheet(title, counts):
     """
     Type of report where there is a simple parent container that hosts
     attributes and their values
     """
+    option = ''
+    if title == 'Obstáculo':
+        option = obstacleImage()
+    elif title == 'Problema de superficie':
+        option = surfaceImage()
+    elif title == 'Sin Rampa':
+        option = noCurbRampImage()
+    elif title == 'No hay banqueta':
+        option = noSidewalkImage()
+    elif title == 'Rampa con imperfectos':
+        option = curbRampImage()
+    elif title == 'Obstrucción de vista':
+        option = occlusionImage()
+    elif title == 'Otro':
+        option = otherImage()
     return html.Div(
         [
             html.H1(title),
@@ -106,7 +196,8 @@ def count_report_sheet(title, counts):
                     )
                     for c in counts
                 ],
-            )
+            ),
+            option
         ]
     )
 
@@ -133,7 +224,7 @@ observation_types = count_report_builder(
 )
 
 obstacle_component = count_report_builder(
-    "Obstacle",
+    "Obstáculo",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "Obstacle",
@@ -142,7 +233,7 @@ obstacle_component = count_report_builder(
 )
 
 no_sidewalk_component = count_report_builder(
-    "NoSidewalk",
+    "No hay banqueta",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "NoSidewalk",
@@ -151,7 +242,7 @@ no_sidewalk_component = count_report_builder(
 )
 
 surface_problem_component = count_report_builder(
-    "SurfaceProblem",
+    "Problema de superficie",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "SurfaceProblem",
@@ -160,7 +251,7 @@ surface_problem_component = count_report_builder(
 )
 
 no_curbramp_component = count_report_builder(
-    "NoCurbRamp",
+    "Sin Rampa",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "NoCurbRamp",
@@ -169,7 +260,7 @@ no_curbramp_component = count_report_builder(
 )
 
 curbramp_component = count_report_builder(
-    "CurbRamp",
+    "Rampa con imperfectos",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "CurbRamp",
@@ -178,7 +269,7 @@ curbramp_component = count_report_builder(
 )
 
 occlusion_component = count_report_builder(
-    "Occlusion",
+    "Obstrucción de vista",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "Occlusion",
@@ -187,14 +278,13 @@ occlusion_component = count_report_builder(
 )
 
 other_component = count_report_builder(
-    "Other",
+    "Otro",
     count_attr_of_col(
         df_points,
         lambda: df_points.label_type == "Other",
         "severity"),
     "sheet"
 )
-
 component_map = {
     "NoSidewalk": no_sidewalk_component,
     "Obstacle": obstacle_component,
