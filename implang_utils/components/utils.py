@@ -62,11 +62,15 @@ def get_title(data):
             return titulos['PR']
         elif data[0] == "Score_EST":
             return titulos['EST']
+        else :
+            return ["", 1]
     elif len(data) == 2:
             if data[0] == "Score_PTS":
                 if data[1] == "Score_PR":
                     return titulos['PTS+PR']
                 elif data[1] == "Score_EST":
                     return titulos['PTS+EST']
+            else:
+                return ["", 1]
     else:
-        return ""
+        return ["", 1]
