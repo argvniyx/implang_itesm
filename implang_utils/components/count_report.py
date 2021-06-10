@@ -198,7 +198,7 @@ def count_report_sheet_n(title, counts):
     fig = px.bar(
         count_reset,
         x=count_reset.columns[0], y="neighborhood",
-        labels={'label_type': 'Cantidad de observaciones', 'severity': "Severidad"}
+        labels={'neighborhood': 'Cantidad de observaciones', 'severity': "Severidad"}
     )
 
     fig.update_layout(
