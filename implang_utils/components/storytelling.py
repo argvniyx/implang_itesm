@@ -28,9 +28,9 @@ def story():
                     ),
                     html.H4(
                         [
-                            "En Nuevo Leon el ",
-                            highlight("3.8 por ciento de la población"),
-                            " padece de alguna condición que limita su autonomía motriz."
+                            "En San Pedro Garza García, el ",
+                            highlight("21.6 por ciento de la población"),
+                            " padece de alguna discapacidad o condición que limita su autonomía."
                         ],
                         className="m-3 px-3"
                     ),
@@ -60,7 +60,11 @@ def whatsHappening():
                         className="display-3 m-5"
                     ),
                     html.H4(
-                        "Se han registrado 93,648 de defectos en las banquetas y calles de San Pedro Garza García.",
+                    [
+                        "Se han registrado ", 
+                        highlight("93,648 defectos "),
+                        "en las banquetas y calles de San Pedro Garza García.",
+                    ],
                         className="m-3 px-3"
                     ),
                     html.H4(
