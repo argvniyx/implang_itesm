@@ -61,8 +61,8 @@ def update_output(value):
                                     zmin=1,
                                     zmax=5,
                                     marker_opacity=(z_value/10) + 0.4, 
-                                    marker_line_width=0,
-                                    hoverinfo='all'))
+                                    marker_line_width=0,))
+
     else:
         fig = go.Figure(go.Choroplethmapbox(geojson=json_scores, 
                                     locations=df_scores.id,
