@@ -34,6 +34,16 @@ label_descriptions = {
     "Other": "Todo otro tipo de observación que no se pueda explicar con las otras etiquetas se considera como Otro."
 }
 
+label_img_paths = {
+    "NoSidewalk": "../../assets/noSidewalk.png",
+    "Obstacle": "../../assets/obstacle.png",
+    "SurfaceProblem": "../../assets/surfaceProblem.png",
+    "NoCurbRamp": "../../assets/noCurbRamp.png",
+    "CurbRamp": "../../assets/curbRamp.png",
+    "Occlusion": "../../assets/occlusion.png",
+    "Other": "../../assets/other.png"
+}
+
 
 def count_attr_of_col(dataframe, pred, attr):
     """
@@ -126,23 +136,17 @@ def count_report_sheet(title, counts):
                 [
                     html.H4(label_translations[title]),
                     html.P(label_descriptions[title]),
-                    dbc.CardDeck(
+                    html.Div(
                         [
-                            dbc.Card(
+                            dbc.Row(
                                 [
-                                    dbc.CardBody(
-                                        [
-                                            html.H5(f'Severidad {c[0]}', className="card-title"),
-                                            html.P(c[1], className="card-text"),
-                                        ]
-                                    )
-                                ],
-                                className="mt-3 md-3"
-                            )
-                            for c in count_list.iteritems()
+                                    dbc.Col(html.Div(html.Img(src=label_img_paths[title], style={'width':'30em'})))
+                                ]
+                            ),
                         ],
-                    ),
-                ]
+                        style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
+                    )
+                ],
             ),
             dbc.Col(
                 dcc.Graph(figure=fig) if len(count_list) != 0 else None

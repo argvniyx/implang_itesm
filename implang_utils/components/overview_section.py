@@ -27,26 +27,31 @@ def overview_section():
     "DB Component<Container>"
 
     observation_string = f'{total_observations} observaciones de banquetas'
-    return dbc.Container(
+    return dbc.Col(
         [
-            dbc.Jumbotron(
-                [
-                    html.H1("En SPGG"),
-                    html.H5(
+            dbc.Row(
+                dbc.Col(
+                    dbc.Jumbotron(
                         [
-                            "Se han hecho un total de ",
-                            html.U(observation_string),
-                        ]
+                            html.H1("En SPGG"),
+                            html.H5(
+                                [
+                                    "Se han hecho un total de ",
+                                    html.U(observation_string),
+                                ]
+                            ),
+                            observation_types,
+                        ],
                     ),
-                    observation_types,
-                ],
+                )
             ),
-            html.Div(
-                [
-                    data_summary_component
-                ],
-                id="count_report"
+            dbc.Row(
+                dbc.Col(
+                    [
+                        data_summary_component
+                    ],
+                    id="count_report"
+                )
             )
         ],
-        fluid=True
     )
