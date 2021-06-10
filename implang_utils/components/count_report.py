@@ -121,7 +121,7 @@ def count_report_sheet(title, counts):
                                 [
                                     dbc.CardBody(
                                         [
-                                            html.H5(f'Severidad c[0]', className="card-title"),
+                                            html.H5(f'Severidad {c[0]}', className="card-title"),
                                             html.P(c[1], className="card-text"),
                                         ]
                                     )
