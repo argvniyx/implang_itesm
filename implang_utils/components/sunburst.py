@@ -45,11 +45,12 @@ def sun():
 
 def graph():
     fig =go.Figure(go.Sunburst(
-        labels=["Población Vulnerable", "3era Edad", "Discapacidad o Limitación", "Condición Mental", "Visual o Auditiva", "Hablar o Comunicarse", "Motriz", "Recordar o concentrarse", "Condición mental", "Ver, aún usando lentes", "Oír, aún usando aparatos", "Caminar, subir o bajar", "Bañarse, vestirse o comer"],
-        parents=["","Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable", "Condición Mental", "Condición Mental", "Visual o Auditiva",  "Visual o Auditiva", "Motriz", "Motriz" ],
-        values=[46200, 17600, 12568, 2466, 8140,485,4941,982, 1484, 6311, 1829, 4147, 794],
-        textinfo='label+percent entry'
+    labels=["Población Vulnerable", "3era Edad", "Discapacidad o Limitación", "Condición Mental", "Visual o Auditiva", "Hablar o Comunicarse", "Motriz", "Recordar o concentrarse", "Condición mental", "Ver, aún usando lentes", "Oir, aún usando aparatos", "Caminar, subir o bajar", "Bañarse, vestirse o comer"],
+    parents=["","Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable",  "Población Vulnerable", "Condición Mental", "Condición Mental", "Visual o Auditiva",  "Visual o Auditiva", "Motriz", "Motriz" ],
+    values=[46200, 17600, 12568, 2466, 8140,485,4941,982, 1484, 6311, 1829, 4147, 794],
+    branchvalues="total",
+    textinfo='label+percent entry'
     ))
-    fig.update_layout(margin = dict(t=0, l=0, r=0, b=0), height=700)
+    fig.update_layout(margin = dict(t=0, l=0, r=0, b=0), height=600)
 
     return dcc.Graph(figure=fig)
