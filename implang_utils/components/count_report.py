@@ -122,7 +122,7 @@ def count_report_sheet(title, counts):
     count_reset = counts.reset_index()
     fig = px.bar(count_reset, x=count_reset.columns[0], y="label_type")
 
-    return html.Div(
+    return dbc.Jumbotron(
         [
             html.H1(title),
             dbc.CardDeck(
@@ -141,7 +141,7 @@ def count_report_sheet(title, counts):
                     for c in count_list.iteritems()
                 ],
             ),
-            dcc.Graph(figure=fig)
+            dcc.Graph(figure=fig) if len(count_list) != 0 else None
         ]
     )
 

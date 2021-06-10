@@ -35,6 +35,7 @@ def header():
             "backgroundRepeat": "no-repeat",
             "display": "flex",
             "flexFlow": "column",
-            "justifyContent": "center"
+            "justifyContent": "center",
+            "color": "whitesmoke"
         }
     )
