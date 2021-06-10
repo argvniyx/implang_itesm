@@ -107,7 +107,18 @@ def count_report_sheet(title, counts):
     # Indexing this way makes it agnostic, versus using a given column name
     count_list = counts[counts.columns[0]]
     count_reset = counts.reset_index()
-    fig = px.bar(count_reset, x=count_reset.columns[0], y="label_type")
+    fig = px.bar(
+        count_reset,
+        x=count_reset.columns[0], y="label_type",
+        labels={'label_type': 'Cantidad de observaciones', 'severity': "Severidad"}
+    )
+
+    fig.update_layout(
+        font_family="Roboto, sans serif, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+        font_color="#242423",
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
 
     return dbc.Row(
         [
