@@ -10,6 +10,7 @@ from implang_utils.components.overview_section import overview_section
 from implang_utils.components.map_component import map_component_go
 from implang_utils.components.storytelling import story, whatsHappening
 from implang_utils.components.sunburst import sun
+from implang_utils.components.testimony import testimonial
 sections = [
     header,
     story,
@@ -18,6 +19,7 @@ sections = [
     overview_section,
     neighborhood_section,
     lambda: map_component_go(['Score_PTS']),
+    testimonial
 ]
 
 # A pages layout is simply a list of Rows
