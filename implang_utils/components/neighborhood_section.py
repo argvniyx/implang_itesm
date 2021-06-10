@@ -47,7 +47,8 @@ def neighborhood_section():
                 [
                     dbc.Col(histogram_neighborhood()),
                     dbc.Col(html.Div(html.Img(src='../../assets/streetDisability.jpg', style={'height':'100%', 'width':'100%', 'marginLeft': '-1vw'})), width=5)
-                ]
+                ],
+                className="m-0"
             ),
             ]
             ),

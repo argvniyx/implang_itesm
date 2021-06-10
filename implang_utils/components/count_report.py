@@ -39,7 +39,7 @@ label_img_paths = {
     "Obstacle": "../../assets/obstacle.png",
     "SurfaceProblem": "../../assets/surfaceProblem.png",
     "NoCurbRamp": "../../assets/noCurbRamp.png",
-    "CurbRamp": "../../assets/curbRamp.png",
+    "CurbRamp": "../../assets/curbRamp.jpg",
     "Occlusion": "../../assets/occlusion.png",
     "Other": "../../assets/other.png"
 }
@@ -88,7 +88,7 @@ def count_report_cards(counts):
                     dbc.CardBody(
                         [
                             html.H5(label_translations[c[0]], className="card-title"),
-                            html.P(c[1], className="card-text"),
+                            html.P(f'{c[1]} defectos', className="card-text"),
                         ]
                     ),
                     dbc.CardFooter(

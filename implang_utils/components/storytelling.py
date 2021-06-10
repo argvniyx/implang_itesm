@@ -1,61 +1,87 @@
-import dash
+"""
+storytelling.py:
+Components that hold some narrative sections
+"""
 import dash_bootstrap_components as dbc
 import dash_html_components as html
-import plotly.express as px
-import dash_core_components as dcc
+from implang_utils.components.utils import highlight
 
 def story():
-    return html.Div(
+    "A simple component that gives an introduction to the topic"
+    return dbc.Row(
         [
-            dbc.Row(
-            [
-                dbc.Col(html.Div(html.Img(src='../../assets/accesibilidad.png', style={'height':'880px', 'width':'100%'})), width=5),
-                dbc.Col(
+            dbc.Col(
+                [],
+                style={
+                    "backgroundImage": "url(../../assets/accesibilidad.png)",
+                    "backgroundPosition": "center",
+                    "backgroundSize": "cover",
+                    "backgroundRepeat": "no-repeat",
+                },
+                width=5
+            ),
+            dbc.Col(
                 [
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H1(html.B("Una ciudad para todos")),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H2("En Nuevo Leon el 3.8 por ciento de la población padece de alguna condición que limita su autonomía motriz."),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H2("Por una ciudad más accesible, es necesario identificar las zonas donde es prioridad brindar un espacio adecuado para todos los ciudadanos.")
-                ], width=7)
-            ])
-        ]
+                    html.H1(
+                        "Una ciudad para todos",
+                        className="display-3 m-5"
+                    ),
+                    html.H4(
+                        [
+                            "En Nuevo Leon el ",
+                            highlight("3.8 por ciento de la población"),
+                            " padece de alguna condición que limita su autonomía motriz."
+                        ],
+                        className="m-3 px-3"
+                    ),
+                    html.H4(
+                        [
+                            "Por una ciudad más accesible, es necesario identificar las zonas donde es prioridad brindar un espacio adecuado para todos los ciudadanos."
+                        ],
+                        className="m-3 px-3"
+                    )
+                ],
+                width=7,
+                className="d-flex flex-column align-items-center justify-content-center"
+            )
+        ],
+        className="h-100 m-0 text-justify"
     )
 
+
 def whatsHappening():
-    return html.Div(
+    "Setup to the overview reports component/slide"
+    return dbc.Row(
         [
-            dbc.Row(
-            [
-                dbc.Col(
+            dbc.Col(
                 [
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H1(html.B("Una ciudad para todos"), style={'marginLeft' : '1vw'}),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H2("Se han registrado 93,648 de defectos en las banquetas y calles de San Pedro Garza García", style={'marginLeft' : '1vw'}),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.H2("Esto representa un obstáculo para proporcionar acceso a la ciudad para todos y afecta la autonomía de las personas que poseen distintas condiciones", style={'marginLeft' : '1vw'})
-                ],width=7),
-                dbc.Col(html.Img(src='../../assets/anciano.png', style={'height':'880px', 'width':'100%'}), width=5),
-            ])
-        ]
+                    html.H1(
+                        "...y todos por la ciudad",
+                        className="display-3 m-5"
+                    ),
+                    html.H4(
+                        "Se han registrado 93,648 de defectos en las banquetas y calles de San Pedro Garza García.",
+                        className="m-3 px-3"
+                    ),
+                    html.H4(
+                        "Esto representa un obstáculo para proporcionar acceso a la ciudad para todos y afecta la autonomía de las personas que poseen distintas condiciones.",
+                        className="m-3 px-3"
+                    )
+                ],
+                width=7,
+                className="d-flex flex-column align-items-center justify-content-center"
+            ),
+
+            dbc.Col(
+                [],
+                style={
+                    "backgroundImage": "url(../../assets/anciano.png)",
+                    "backgroundPosition": "center",
+                    "backgroundSize": "cover",
+                    "backgroundRepeat": "no-repeat",
+                },
+                width=5
+            )
+        ],
+        className="h-100 m-0 text-justify"
     )

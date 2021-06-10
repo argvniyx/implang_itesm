@@ -36,8 +36,9 @@ def overview_section():
                             html.H1("En SPGG"),
                             html.H5(
                                 [
-                                    "Se han hecho un total de ",
+                                    "De un total de ",
                                     html.U(observation_string),
+                                    ", se registran:"
                                 ]
                             ),
                             observation_types,
