@@ -44,17 +44,17 @@ def whatsHappening():
                     html.Br(),
                     html.Br(),
                     html.Br(),
-                    html.H1(html.B("Una ciudad para todos"), style={'margin-left' : '1vw'}),
+                    html.H1(html.B("Una ciudad para todos"), style={'marginLeft' : '1vw'}),
                     html.Br(),
                     html.Br(),
                     html.Br(),
                     html.Br(),
-                    html.H2("Se han registrado 93,648 de defectos en las banquetas y calles de San Pedro Garza García", style={'margin-left' : '1vw'}),
+                    html.H2("Se han registrado 93,648 de defectos en las banquetas y calles de San Pedro Garza García", style={'marginLeft' : '1vw'}),
                     html.Br(),
                     html.Br(),
                     html.Br(),
                     html.Br(),
-                    html.H2("Esto representa un obstáculo para proporcionar acceso a la ciudad para todos y afecta la autonomía de las personas que poseen distintas condiciones", style={'margin-left' : '1vw'})
+                    html.H2("Esto representa un obstáculo para proporcionar acceso a la ciudad para todos y afecta la autonomía de las personas que poseen distintas condiciones", style={'marginLeft' : '1vw'})
                 ],width=7),
                 dbc.Col(html.Img(src='../../assets/anciano.png', style={'height':'90vh', 'width':'37vw', 'marginLeft' : '3.4vw'}), width=5),
             ])
