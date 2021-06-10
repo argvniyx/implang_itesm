@@ -22,6 +22,7 @@ def tab_content(title):
             html.P(["Total de imperfectos: ", neighborhoods[title]])
         ]),
         className="mt-3")
+
 def histogram_neighborhood():
     fig = px.histogram(df_points, x="neighborhood", color_discrete_sequence=['#a23e48'])
     return dcc.Graph(figure=fig)
