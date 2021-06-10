@@ -20,18 +20,23 @@ from implang_utils.components.utils import get_title
 """ fig = px.histogram(df1, x="reviews_per_month", y="price", color="room_type", marginal="rug")
 fig.show() """
 def map_component_go(data=[]):
+
+    
     "Create a Plotly map with the observations"
     return html.Div([
-        dcc.Checklist(
-            id='demo-checklist',
-    options=[
-            {'label': 'Banquetas', 'value': 'P'},
-            {'label': 'Personas de Riesgo', 'value': 'PR'},
-            {'label': 'Establecimientos', 'value': 'EST'}
-            ],
-    value=['P'])  ,
-        html.Div(id='dd-output-container')
-        ])
+        
+        dcc.Checklist(id='demo-checklist',
+        options=[
+                {'label': '  Banquetas', 'value': 'P'},
+                {'label': '  Personas de Riesgo', 'value': 'PR'},
+                {'label': '  Establecimientos', 'value': 'EST'}
+                ],
+        value=['P'],
+        labelStyle={'display': 'flex', ' flex-direction': 'column'},
+        style = {'flex-shrink' : '3', 'padding-left': '10%'}),
+
+        html.Div(id='dd-output-container', style = {'flex-grow' : '5','padding': '0% 10% 0% 3%'})
+        ], style= {'display' : 'flex', 'justify-content' : 'space-evenly', 'align-items' : 'center', 'width': '100%', 'height': '100%'})
 
 
 def map_componet_points():

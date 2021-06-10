@@ -33,6 +33,7 @@ app = dash.Dash(
 @app.callback(
     dash.dependencies.Output('dd-output-container', 'children'),
     [dash.dependencies.Input('demo-checklist', 'value')])
+
 def update_output(value):
     data = []
     for e in value:
@@ -46,6 +47,8 @@ def update_output(value):
             data.append('Score_EST')
     
     title = get_title(data)
+    title_size = title.pop()
+    title = title.pop()
     colorscale = graph_color_scale()
 
     if len(data) > 0:
@@ -54,6 +57,7 @@ def update_output(value):
                                     locations=df_scores.id,
                                     z= z_value,
                                     colorscale= colorscale,
+                                    colorbar = dict(dtick = 1),
                                     zmin=1,
                                     zmax=5,
                                     marker_opacity=(z_value/10) + 0.4, 
@@ -63,13 +67,18 @@ def update_output(value):
         fig = go.Figure(go.Choroplethmapbox(geojson=json_scores, 
                                     locations=df_scores.id,
                                     colorscale= colorscale))
-
-    fig.update_layout(title=title,
+    fig.update_layout(
+                    title=dict(text=title, font=dict(size=title_size)),
+                    title_xref = "paper",
+                    geo_bgcolor = 'rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor = 'rgba(0,0,0,0)',
+                    height = 600,
                     mapbox_style="stamen-toner",
                     autosize=True,
-                    mapbox_center = {"lat": 25.6551647, "lon": -100.3948332},
-                    mapbox_zoom=12)
-    return dcc.Graph(figure=fig)
+                    mapbox_center = {"lat": 25.655624, "lon":-100.373121},
+                    mapbox_zoom=11)
+    return dcc.Graph(figure=fig, style= {'width' : '100%' } )
    
 app.config.suppress_callback_exceptions = True
 server = app.server
