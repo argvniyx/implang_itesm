@@ -73,12 +73,12 @@ def update_output(value):
                     geo_bgcolor = 'rgba(0,0,0,0)',
                     plot_bgcolor='rgba(0,0,0,0)',
                     paper_bgcolor = 'rgba(0,0,0,0)',
-                    height = 600,
+                    height = 550,
                     mapbox_style="stamen-toner",
                     autosize=True,
                     mapbox_center = {"lat": 25.655624, "lon":-100.373121},
                     mapbox_zoom=11)
-    return dcc.Graph(figure=fig, style= {'width' : '100%' } )
+    return dcc.Graph(figure=fig, style= {'width' : '90%' } )
    
 app.config.suppress_callback_exceptions = True
 server = app.server
