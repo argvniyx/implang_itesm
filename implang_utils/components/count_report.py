@@ -107,6 +107,37 @@ def count_report_cards(counts):
         ],
     )
 
+def count_report_cards_n(counts):
+    """
+    A type of report where each attribute and its count
+    is presented as a card. Used for general observations.
+    """
+    return dbc.CardDeck(
+        [
+            dbc.Card(
+                [
+                    dbc.CardBody(
+                        [
+                            html.H5(c[0], className="card-title"),
+                            html.P(f'{c[1]} defectos', className="card-text"),
+                        ]
+                    ),
+                    dbc.CardFooter(
+                        dbc.Button(
+                            "Más información",
+                            id={
+                                "type":  "neighborhood_card",
+                                "index": c[0]
+                            }
+                        )
+                    )
+                ],
+                className="mt-3 md-3",
+            )
+            for c in counts
+        ],
+    )
+
 
 def count_report_sheet(title, counts):
     """
@@ -155,6 +186,50 @@ def count_report_sheet(title, counts):
         className="d-flex"
     )
 
+def count_report_sheet_n(title, counts):
+    """
+    Type of report where there is a simple parent container that hosts
+    attributes and their values
+    """
+
+    # Indexing this way makes it agnostic, versus using a given column name
+    count_list = counts[counts.columns[0]]
+    count_reset = counts.reset_index()
+    fig = px.bar(
+        count_reset,
+        x=count_reset.columns[0], y="neighborhood",
+        labels={'label_type': 'Cantidad de observaciones', 'severity': "Severidad"}
+    )
+
+    fig.update_layout(
+        font_family="Roboto, sans serif, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+        font_color="#242423",
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+
+    return dbc.Row(
+        [
+            dbc.Col(
+                [
+                    html.H2(title, className="display-4"),
+                ],
+            ),
+            dbc.Col(
+                dcc.Graph(figure=fig) if len(count_list) != 0 else None
+            )
+        ],
+        className="d-flex"
+    )
+
+
+neighborhood_report = count_report_cards_n(
+    count_attr_of_col(
+        df_points,
+        lambda: "neighborhood",
+        None
+    )
+)
 
 observation_types = count_report_cards(
     count_attr_of_col(
@@ -238,6 +313,119 @@ component_map = {
 }
 
 
+san_pedro = count_report_sheet_n(
+    "San Pedro",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "San Pedro",
+        "severity"
+    )
+)
+
+del_valle = count_report_sheet_n(
+    "Del Valle",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Del Valle",
+        "severity"
+    )
+)
+
+lomas = count_report_sheet_n(
+    "Lomas",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Lomas",
+        "severity"
+    )
+)
+
+valle_poniente = count_report_sheet_n(
+    "Valle Poniente",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Valle Poniente",
+        "severity"
+    )
+)
+
+el_obispo = count_report_sheet_n(
+    "El Obispo",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "El Obispo",
+        "severity"
+    )
+)
+
+san_angel = count_report_sheet_n(
+    "San Angel",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "San Angel",
+        "severity"
+    )
+)
+
+valle_oriente = count_report_sheet_n(
+    "Valle Oriente",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Valle Oriente",
+        "severity"
+    )
+)
+
+los_callejones = count_report_sheet_n(
+    "Los Callejones",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Los Callejones",
+        "severity"
+    )
+)
+
+san_agustin = count_report_sheet_n(
+    "San Agustín",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "San Agustín",
+        "severity"
+    )
+)
+
+industrial = count_report_sheet_n(
+    "Industrial",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Industrial",
+        "severity"
+    )
+)
+
+santa_catarina = count_report_sheet_n(
+    "Río Santa Catarina",
+    count_attr_of_col_df(
+        df_points,
+        lambda: df_points.neighborhood == "Rio Santa Catarina",
+        "severity"
+    )
+)
+
+neighborhood_map = {
+    "San Pedro": san_pedro,
+    "Del Valle": del_valle,
+    "Lomas": lomas,
+    "Valle Poniente": valle_poniente,
+    "El Obispo": el_obispo,
+    "San Angel": san_angel,
+    "Valle Oriente": valle_oriente,
+    "Los Callejones": los_callejones,
+    "San Agustín": san_agustin,
+    "Industrial": industrial,
+    "Rio Santa Catarina": santa_catarina
+}
+
 @app.callback(
     Output("count_report", "children"),
     Input({"type": "observation_card", "index": ALL}, "n_clicks"),
@@ -248,3 +436,15 @@ def select_report(*args):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     id_json = json.loads(button_id)
     return component_map[id_json["index"]]
+
+
+@app.callback(
+    Output("count_report_neighborhood", "children"),
+    Input({"type": "neighborhood_card", "index": ALL}, "n_clicks"),
+    prevent_initial_call=True
+)
+def select_report_n(*args):
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    id_json = json.loads(button_id)
+    return neighborhood_map[id_json["index"]]
