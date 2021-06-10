@@ -12,8 +12,11 @@ from implang_utils.components.map_component import map_component
 from implang_utils.components.map_component import map_component_denue
 from implang_utils.components.map_component import map_component_inegi
 from implang_utils.components.map_component import map_component_go
+from implang_utils.components.storytelling import story, whatsHappening
 sections = [
     header,
+    story,
+    whatsHappening,
     overview_section,
     neighborhood_section,
     lambda: map_component_go(['Score_PTS']),
