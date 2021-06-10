@@ -3,10 +3,12 @@ count_report.py:
 A component that gives statistical information
 on a list of counts
 """
-import dash
 import json
+import dash
+import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import plotly.express as px
 from dash.dependencies import Input, Output, ALL
 from dash.exceptions import PreventUpdate
 from implang_utils.data.dataframe import df_points
@@ -23,13 +25,23 @@ label_translations = {
 }
 
 label_descriptions = {
-    "NoSidewalk": "No hay banqueta",
-    "Obstacle": "Obstáculo",
-    "SurfaceProblem": "Problema de superficie",
-    "NoCurbRamp": "Sin Rampa",
-    "CurbRamp": "Rampa con imperfectos",
-    "Occlusion": "Obstrucción de vista",
-    "Other": "Otro"
+    "NoSidewalk": "Esta observación se hace a todo punto donde una banqueta pierda su continuación. No aplica a camellones a menos de que tengan un espacio explícitamente designado para el peatón.",
+    "Obstacle": "Se denomina obstáculo todo objeto que impida el paso, y su severidad depende de qué tan fácil o difícil es rodearle. Ejemplos de esto pueden ser árboles o postes.",
+    "SurfaceProblem": "Un problema de superficie puede ser una superficie agrietada, con grava o con desniveles.",
+    "NoCurbRamp": "Estas observaciones corresponden a faltas de rampas, particularmente cuando se espera que haya (por ejemplo, en un cruce peatonal).",
+    "CurbRamp": "Estas observaciones tienen que ver con la calidad de las rampas existentes. Si una rampa está mal posicionada, la observación tiene mayor severidad.",
+    "Occlusion": "Se considera oclusión toda vez que una persona etiquetando puntos no pueda ver la banqueta con claridad. Por su naturaleza, éstas observaciones no tienen calificación.",
+    "Other": "Todo otro tipo de observación que no se pueda explicar con las otras etiquetas se considera como Otro."
+}
+
+label_img_paths = {
+    "NoSidewalk": "../../assets/noSidewalk.png",
+    "Obstacle": "../../assets/obstacle.png",
+    "SurfaceProblem": "../../assets/surfaceProblem.png",
+    "NoCurbRamp": "../../assets/noCurbRamp.png",
+    "CurbRamp": "../../assets/curbRamp.png",
+    "Occlusion": "../../assets/occlusion.png",
+    "Other": "../../assets/other.png"
 }
 
 
@@ -49,6 +61,19 @@ def count_attr_of_col(dataframe, pred, attr):
     return [(a, attr_count[a]) for a in attr_count.keys()]
 
 
+def count_attr_of_col_df(dataframe, pred, attr):
+    """
+    Same as count_attr_of_col but instead returns a dataframe
+    as processed by groupby and aggregated with .count(). This
+    way we can use the results with plotly
+    """
+    total_of_col = dataframe[pred()]
+    if attr is None:
+        attr_count = total_of_col.shape[0]
+    else:
+        attr_count = total_of_col.groupby(attr).count()
+
+    return attr_count
 
 
 def count_report_cards(counts):
@@ -68,7 +93,7 @@ def count_report_cards(counts):
                     ),
                     dbc.CardFooter(
                         dbc.Button(
-                            html.P("Más información"),
+                            "Más información",
                             id={
                                 "type":  "observation_card",
                                 "index": c[0]
@@ -81,210 +106,127 @@ def count_report_cards(counts):
             for c in counts
         ],
     )
-def obstacleImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
 
-                    dbc.Col(html.Div(html.Img(src='../../assets/obstacle.png', style={'height':'100%', 'width':'100%'})))
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def surfaceImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
 
-                    dbc.Col(html.Div(html.Img(src='../../assets/surfaceProblem.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def noCurbRampImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/noCurbRamp.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def noSidewalkImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/noSidewalk.png', style={'height':'100%', 'width':'100%'})))
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def curbRampImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/curbRamp.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def occlusionImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/occlusion.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-def otherImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/other.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
 def count_report_sheet(title, counts):
     """
     Type of report where there is a simple parent container that hosts
     attributes and their values
     """
-    option = ''
-    if title == 'Obstáculo':
-        option = obstacleImage()
-    elif title == 'Problema de superficie':
-        option = surfaceImage()
-    elif title == 'Sin Rampa':
-        option = noCurbRampImage()
-    elif title == 'No hay banqueta':
-        option = noSidewalkImage()
-    elif title == 'Rampa con imperfectos':
-        option = curbRampImage()
-    elif title == 'Obstrucción de vista':
-        option = occlusionImage()
-    elif title == 'Otro':
-        option = otherImage()
-    return html.Div(
+
+    # Indexing this way makes it agnostic, versus using a given column name
+    count_list = counts[counts.columns[0]]
+    count_reset = counts.reset_index()
+    fig = px.bar(
+        count_reset,
+        x=count_reset.columns[0], y="label_type",
+        labels={'label_type': 'Cantidad de observaciones', 'severity': "Severidad"}
+    )
+
+    fig.update_layout(
+        font_family="Roboto, sans serif, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+        font_color="#242423",
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+
+    return dbc.Row(
         [
-            html.H1(title),
-            dbc.CardDeck(
+            dbc.Col(
                 [
-                    dbc.Card(
+                    html.H4(label_translations[title]),
+                    html.P(label_descriptions[title]),
+                    html.Div(
                         [
-                            dbc.CardBody(
+                            dbc.Row(
                                 [
-                                    html.H5(c[0], className="card-title"),
-                                    html.P(c[1], className="card-text")
+                                    dbc.Col(html.Div(html.Img(src=label_img_paths[title], style={'width':'30em'})))
                                 ]
-                            )
+                            ),
                         ],
-                        className="mt-3 md-3"
+                        style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
                     )
-                    for c in counts
                 ],
             ),
-            option
-        ]
+            dbc.Col(
+                dcc.Graph(figure=fig) if len(count_list) != 0 else None
+            )
+        ],
+        className="d-flex"
     )
 
 
-def count_report_builder(title, counts, component_type):
-    """
-    Given a list of pairs, counts, and a component, build
-    a little report of the counts provided
-    """
-    if component_type == "cards":
-        return count_report_cards(counts)
-
-    return count_report_sheet(title, counts)
-
-
-observation_types = count_report_builder(
-    "Observaciones",
+observation_types = count_report_cards(
     count_attr_of_col(
         df_points,
         lambda: "label_type",
         None
-    ),
-    "cards"
+    )
 )
 
-obstacle_component = count_report_builder(
-    "Obstáculo",
-    count_attr_of_col(
+obstacle_component = count_report_sheet(
+    "Obstacle",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Obstacle",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-no_sidewalk_component = count_report_builder(
-    "No hay banqueta",
-    count_attr_of_col(
+no_sidewalk_component = count_report_sheet(
+    "NoSidewalk",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoSidewalk",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-surface_problem_component = count_report_builder(
-    "Problema de superficie",
-    count_attr_of_col(
+surface_problem_component = count_report_sheet(
+    "SurfaceProblem",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "SurfaceProblem",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-no_curbramp_component = count_report_builder(
-    "Sin Rampa",
-    count_attr_of_col(
+no_curbramp_component = count_report_sheet(
+    "NoCurbRamp",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoCurbRamp",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-curbramp_component = count_report_builder(
-    "Rampa con imperfectos",
-    count_attr_of_col(
+curbramp_component = count_report_sheet(
+    "CurbRamp",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "CurbRamp",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-occlusion_component = count_report_builder(
-    "Obstrucción de vista",
-    count_attr_of_col(
+occlusion_component = count_report_sheet(
+    "Occlusion",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Occlusion",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
 
-other_component = count_report_builder(
-    "Otro",
-    count_attr_of_col(
+other_component = count_report_sheet(
+    "Other",
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Other",
-        "severity"),
-    "sheet"
+        "severity"
+    )
 )
+
 component_map = {
     "NoSidewalk": no_sidewalk_component,
     "Obstacle": obstacle_component,
@@ -301,10 +243,7 @@ component_map = {
     Input({"type": "observation_card", "index": ALL}, "n_clicks"),
     prevent_initial_call=True
 )
-def select_report(n_clicks):
-    if n_clicks is None:
-        raise PreventUpdate
-
+def select_report(*args):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     id_json = json.loads(button_id)

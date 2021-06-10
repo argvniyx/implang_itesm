@@ -3680,12 +3680,12 @@ input[type="button"].btn-block {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  color: #e8edef;
-  background-color: #242423;
+  color: #242423;
+  background-color: #e8edef;
   border-radius: 0.3rem; }
   @media (min-width: 576px) {
     .jumbotron {
-      padding: 4rem 2rem; } }
+      padding: 2rem 2rem; } }
 
 .jumbotron-fluid {
   padding-right: 0;
