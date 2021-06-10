@@ -25,13 +25,13 @@ label_translations = {
 }
 
 label_descriptions = {
-    "NoSidewalk": "No hay banqueta",
-    "Obstacle": "Obstáculo",
-    "SurfaceProblem": "Problema de superficie",
-    "NoCurbRamp": "Sin Rampa",
-    "CurbRamp": "Rampa con imperfectos",
-    "Occlusion": "Obstrucción de vista",
-    "Other": "Otro"
+    "NoSidewalk": "Esta observación se hace a todo punto donde una banqueta pierda su continuación. No aplica a camellones a menos de que tengan un espacio explícitamente designado para el peatón.",
+    "Obstacle": "Se denomina obstáculo todo objeto que impida el paso, y su severidad depende de qué tan fácil o difícil es rodearle. Ejemplos de esto pueden ser árboles o postes.",
+    "SurfaceProblem": "Un problema de superficie puede ser una superficie agrietada, con grava o con desniveles.",
+    "NoCurbRamp": "Estas observaciones corresponden a faltas de rampas, particularmente cuando se espera que haya (por ejemplo, en un cruce peatonal).",
+    "CurbRamp": "Estas observaciones tienen que ver con la calidad de las rampas existentes. Si una rampa está mal posicionada, la observación tiene mayor severidad.",
+    "Occlusion": "Se considera oclusión toda vez que una persona etiquetando puntos no pueda ver la banqueta con claridad. Por su naturaleza, éstas observaciones no tienen calificación.",
+    "Other": "Todo otro tipo de observación que no se pueda explicar con las otras etiquetas se considera como Otro."
 }
 
 
@@ -98,19 +98,6 @@ def count_report_cards(counts):
     )
 
 
-def otherImage():
-    return html.Div(
-        [
-        dbc.Row(
-                [
-
-                    dbc.Col(html.Div(html.Img(src='../../assets/other.png', style={'height':'100%', 'width':'100%'})), width=10)
-                ]
-            ),
-        ], style={'display': 'flex', 'flexDirection': 'row', 'justifyContent' : 'center'}
-    )
-
-
 def count_report_sheet(title, counts):
     """
     Type of report where there is a simple parent container that hosts
@@ -122,27 +109,35 @@ def count_report_sheet(title, counts):
     count_reset = counts.reset_index()
     fig = px.bar(count_reset, x=count_reset.columns[0], y="label_type")
 
-    return dbc.Jumbotron(
+    return dbc.Row(
         [
-            html.H1(title),
-            dbc.CardDeck(
+            dbc.Col(
                 [
-                    dbc.Card(
+                    html.H4(label_translations[title]),
+                    html.P(label_descriptions[title]),
+                    dbc.CardDeck(
                         [
-                            dbc.CardBody(
+                            dbc.Card(
                                 [
-                                    html.H5(c[0], className="card-title"),
-                                    html.P(c[1], className="card-text"),
-                                ]
+                                    dbc.CardBody(
+                                        [
+                                            html.H5(f'Severidad c[0]', className="card-title"),
+                                            html.P(c[1], className="card-text"),
+                                        ]
+                                    )
+                                ],
+                                className="mt-3 md-3"
                             )
+                            for c in count_list.iteritems()
                         ],
-                        className="mt-3 md-3"
-                    )
-                    for c in count_list.iteritems()
-                ],
+                    ),
+                ]
             ),
-            dcc.Graph(figure=fig) if len(count_list) != 0 else None
-        ]
+            dbc.Col(
+                dcc.Graph(figure=fig) if len(count_list) != 0 else None
+            )
+        ],
+        className="d-flex"
     )
 
 
@@ -155,7 +150,7 @@ observation_types = count_report_cards(
 )
 
 obstacle_component = count_report_sheet(
-    "Obstáculo",
+    "Obstacle",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Obstacle",
@@ -164,7 +159,7 @@ obstacle_component = count_report_sheet(
 )
 
 no_sidewalk_component = count_report_sheet(
-    "No hay banqueta",
+    "NoSidewalk",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoSidewalk",
@@ -173,7 +168,7 @@ no_sidewalk_component = count_report_sheet(
 )
 
 surface_problem_component = count_report_sheet(
-    "Problema de superficie",
+    "SurfaceProblem",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "SurfaceProblem",
@@ -182,7 +177,7 @@ surface_problem_component = count_report_sheet(
 )
 
 no_curbramp_component = count_report_sheet(
-    "Sin Rampa",
+    "NoCurbRamp",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoCurbRamp",
@@ -191,7 +186,7 @@ no_curbramp_component = count_report_sheet(
 )
 
 curbramp_component = count_report_sheet(
-    "Rampa con imperfectos",
+    "CurbRamp",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "CurbRamp",
@@ -200,7 +195,7 @@ curbramp_component = count_report_sheet(
 )
 
 occlusion_component = count_report_sheet(
-    "Obstrucción de vista",
+    "Occlusion",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Occlusion",
@@ -209,7 +204,7 @@ occlusion_component = count_report_sheet(
 )
 
 other_component = count_report_sheet(
-    "Otro",
+    "Other",
     count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Other",
@@ -233,10 +228,7 @@ component_map = {
     Input({"type": "observation_card", "index": ALL}, "n_clicks"),
     prevent_initial_call=True
 )
-def select_report(n_clicks):
-    if n_clicks is None:
-        raise PreventUpdate
-
+def select_report(*args):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     id_json = json.loads(button_id)

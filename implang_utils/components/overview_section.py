@@ -11,15 +11,27 @@ from implang_utils.components.utils import highlight
 from implang_utils.components.count_report import observation_types
 
 total_observations = df_points.shape[0]
+
+data_summary_component = dbc.Row(
+    [
+        dbc.Col(
+            html.H3(
+                "Da click en los botones de 'Más Información' para explorar las calificaciones de las etiquetas"
+            )
+        )
+    ]
+)
+
+
 def overview_section():
     "DB Component<Container>"
 
     observation_string = f'{total_observations} observaciones de banquetas'
     return dbc.Container(
         [
-            html.H1("En SPGG"),
-            html.Div(
+            dbc.Jumbotron(
                 [
+                    html.H1("En SPGG"),
                     html.H5(
                         [
                             "Se han hecho un total de ",
@@ -30,7 +42,9 @@ def overview_section():
                 ],
             ),
             html.Div(
-                children=[],
+                [
+                    data_summary_component
+                ],
                 id="count_report"
             )
         ],
