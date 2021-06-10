@@ -9,10 +9,11 @@ from implang_utils.components.section import section
 from implang_utils.components.overview_section import overview_section
 from implang_utils.components.map_component import map_component_go
 from implang_utils.components.storytelling import story, whatsHappening
-
+from implang_utils.components.sunburst import sun
 sections = [
     header,
     story,
+    sun,
     whatsHappening,
     overview_section,
     neighborhood_section,
