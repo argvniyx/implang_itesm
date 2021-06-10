@@ -5,8 +5,10 @@ on a list of counts
 """
 import json
 import dash
+import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import plotly.express as px
 from dash.dependencies import Input, Output, ALL
 from dash.exceptions import PreventUpdate
 from implang_utils.data.dataframe import df_points
@@ -47,6 +49,21 @@ def count_attr_of_col(dataframe, pred, attr):
         attr_count = total_of_col.value_counts()
 
     return [(a, attr_count[a]) for a in attr_count.keys()]
+
+
+def count_attr_of_col_df(dataframe, pred, attr):
+    """
+    Same as count_attr_of_col but instead returns a dataframe
+    as processed by groupby and aggregated with .count(). This
+    way we can use the results with plotly
+    """
+    total_of_col = dataframe[pred()]
+    if attr is None:
+        attr_count = total_of_col.shape[0]
+    else:
+        attr_count = total_of_col.groupby(attr).count()
+
+    return attr_count
 
 
 def count_report_cards(counts):
@@ -99,6 +116,12 @@ def count_report_sheet(title, counts):
     Type of report where there is a simple parent container that hosts
     attributes and their values
     """
+
+    # Indexing this way makes it agnostic, versus using a given column name
+    count_list = counts[counts.columns[0]]
+    count_reset = counts.reset_index()
+    fig = px.bar(count_reset, x=count_reset.columns[0], y="label_type")
+
     return html.Div(
         [
             html.H1(title),
@@ -109,15 +132,16 @@ def count_report_sheet(title, counts):
                             dbc.CardBody(
                                 [
                                     html.H5(c[0], className="card-title"),
-                                    html.P(c[1], className="card-text")
+                                    html.P(c[1], className="card-text"),
                                 ]
                             )
                         ],
                         className="mt-3 md-3"
                     )
-                    for c in counts
+                    for c in count_list.iteritems()
                 ],
             ),
+            dcc.Graph(figure=fig)
         ]
     )
 
@@ -132,7 +156,7 @@ observation_types = count_report_cards(
 
 obstacle_component = count_report_sheet(
     "Obstáculo",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Obstacle",
         "severity"
@@ -141,7 +165,7 @@ obstacle_component = count_report_sheet(
 
 no_sidewalk_component = count_report_sheet(
     "No hay banqueta",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoSidewalk",
         "severity"
@@ -150,7 +174,7 @@ no_sidewalk_component = count_report_sheet(
 
 surface_problem_component = count_report_sheet(
     "Problema de superficie",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "SurfaceProblem",
         "severity"
@@ -159,7 +183,7 @@ surface_problem_component = count_report_sheet(
 
 no_curbramp_component = count_report_sheet(
     "Sin Rampa",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "NoCurbRamp",
         "severity"
@@ -168,7 +192,7 @@ no_curbramp_component = count_report_sheet(
 
 curbramp_component = count_report_sheet(
     "Rampa con imperfectos",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "CurbRamp",
         "severity"
@@ -177,7 +201,7 @@ curbramp_component = count_report_sheet(
 
 occlusion_component = count_report_sheet(
     "Obstrucción de vista",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Occlusion",
         "severity"
@@ -186,7 +210,7 @@ occlusion_component = count_report_sheet(
 
 other_component = count_report_sheet(
     "Otro",
-    count_attr_of_col(
+    count_attr_of_col_df(
         df_points,
         lambda: df_points.label_type == "Other",
         "severity"
