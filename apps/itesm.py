@@ -19,7 +19,7 @@ sections = [
     overview_section,
     neighborhood_section,
     lambda: map_component_go(['Score_PTS']),
-    map_componet_points,
+    #map_componet_points,
     #lambda: map_component_go(['Score_PTS', 'Score_EST']),
     #lambda: map_component_go(['Score_PTS', 'Score_PR']),
     #lambda: map_component_go(['Score_PTS', 'Score_EST', 'Score_PR'])

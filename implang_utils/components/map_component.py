@@ -22,29 +22,30 @@ fig.show() """
 def map_component_go(data=[]):
     "Create a Plotly map with the observations"
     return html.Div([
-        dcc.Dropdown(
-            id='demo-dropdown',
-            options=[
-                {'label': 'Porcentaje de calificación promedio de banquetas', 'value': 'A'},
-                {'label': 'Calificación de banquetas tomando datos de establecimientos', 'value': 'B'},
-                {'label': 'Calificación de banquetas tomando datos de personas de riesgo', 'value': 'C'},
-                {'label': 'Calificación de banquetas tomando datos de personas de riesgo y establecimientos', 'value': 'D'},
+        dcc.Checklist(
+            id='demo-checklist',
+    options=[
+            {'label': 'Banquetas', 'value': 'P'},
+            {'label': 'Personas de Riesgo', 'value': 'PR'},
+            {'label': 'Establecimientos', 'value': 'EST'}
             ],
-            value='A'
-        ),
+    value=['P'])  ,
         html.Div(id='dd-output-container')
         ])
 
 
 def map_componet_points():
+    df_points["severity"].fillna(1, inplace=True)
+    df_points["severity_norm"] = ((df_points['severity']-min(df_points['severity']))/(max(df_points['severity'])-min(df_points['severity']))) / 2
     "Create a Plotly map with the observations"
     fig = px.scatter_mapbox(df_points,
                         lat=df_points.geometry.y,
                         lon=df_points.geometry.x,
                         mapbox_style="stamen-toner",
-                        color="neighborhood", 
-                        #hover_data=["nom_estab"],
-                        #size="per_ocu_cat",
+                        color="label_type", 
+                        hover_data=["neighborhood"],
+                        #size = "severity",
+                        opacity= df_points.severity_norm,
                         zoom=13)
     
     fig.update_layout(autosize=True)
